@@ -1,7 +1,7 @@
 pub struct Vec3D {
-  x: f64,
-  y: f64,
-  z: f64
+  pub x: f64,
+  pub y: f64,
+  pub z: f64
 }
 
 impl Vec3D {
@@ -14,7 +14,7 @@ impl Vec3D {
     new_vec3d
   }
 
-  pub fn normalize(Vec3D vec) -> Vec3D {
+  pub fn normalize(vec: Vec3D) -> Vec3D {
     todo!();
   }
 }

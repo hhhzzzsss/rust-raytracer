@@ -1,5 +1,7 @@
 pub mod file_io;
 pub mod color;
+pub mod vec3d;
+pub mod mat3d;
 
 fn main() {
     use crate::color::color::Color;

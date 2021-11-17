@@ -1,11 +1,13 @@
-struct Color {
-  r: f32,
-  g: f32,
-  b: f32
-}
+pub mod color {
 
-impl Color {
-  fn new(r, g, b) {
-    Color{r, g, b}
+  pub struct Color {
+    pub r: u8,
+    pub g: u8,
+    pub b: u8 }
+
+  impl Color {
+    fn new(r: u8, g:u8 , b: u8) -> Color {
+      Color {r, g, b}
+    }
   }
 }

@@ -1,6 +1,6 @@
 #[derive(Copy, Clone)]
 pub struct HitResult {
-  dir: Vec3D,
+  pos: Vec3D,
 	nor: Vec3D,
   dist: f64,
   front_face: bool,
@@ -8,9 +8,9 @@ pub struct HitResult {
 }
 
 impl HitResult {
-  pub fn new(dir: Vec3D, nor: Vec3D, dist: f64, front_face: bool, material: &Material) -> Self {
+  pub fn new(pos: Vec3D, nor: Vec3D, dist: f64, front_face: bool, material: &Material) -> Self {
     Self {
-      dir,
+      pos,
       nor,
       dist,
       front_face,

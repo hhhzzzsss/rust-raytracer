@@ -1,6 +1,7 @@
 use std::ops::Add;
 use std::ops::Mul;
 
+#[derive(Copy, Clone)]
 pub struct Vec3D {
   pub x: f64,
   pub y: f64,
@@ -17,8 +18,17 @@ impl Vec3D {
     new_vec3d
   }
 
-  pub fn normalize(vec: Vec3D) -> Vec3D {
-    todo!();
+  pub fn normalize(&self) -> Vec3D {
+    let length = (self.x*self.x + self.y*self.y + self.z*self.z).sqrt();
+    Vec3D {
+      x: self.x / length,
+      y: self.y / length,
+      z: self.z / length
+    }
+  }
+
+  pub fn to_string(&self) -> String {
+    return format!("Vec3D{{ {:.3}, {:.3}, {:.3} }}", self.x, self.y, self.z);
   }
 }
 
@@ -42,6 +52,30 @@ impl Mul<Vec3D> for Vec3D {
       x: self.x * rhs.x,
       y: self.y * rhs.y,
       z: self.z * rhs.z
+    }
+  }
+}
+
+impl Mul<f64> for Vec3D {
+  type Output = Vec3D;
+
+  fn mul(self, rhs: f64) -> Vec3D {
+    Vec3D {
+      x: self.x * rhs,
+      y: self.y * rhs,
+      z: self.z * rhs
+    }
+  }
+}
+
+impl Mul<Vec3D> for f64 {
+  type Output = Vec3D;
+
+  fn mul(self, rhs: Vec3D) -> Vec3D {
+    Vec3D {
+      x: self * rhs.x,
+      y: self * rhs.y,
+      z: self * rhs.z
     }
   }
 }

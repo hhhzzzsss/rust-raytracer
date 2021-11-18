@@ -4,6 +4,7 @@ pub mod vec3d;
 pub mod mat3d;
 
 use crate::color::color::Color;
+use crate::vec3d::Vec3D;
 
 fn test_image() {
     let mut color_vec : Vec<Vec<Color>> = Vec::new(); 
@@ -20,8 +21,10 @@ fn test_image() {
 }
 
 fn test_linalg() {
-    
+    let v1 = Vec3D::new(1., 2., 3.);
+    println!("{}", v1.to_string());
 }
 
 fn main() {
+    test_linalg();
 }

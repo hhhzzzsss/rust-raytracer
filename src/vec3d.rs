@@ -20,8 +20,20 @@ impl Vec3D {
     new_vec3d
   }
 
+  pub fn dot(v1: Vec3D, v2: Vec3D) -> f64 {
+    return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
+  }
+
+  pub fn length_squared(&self) -> f64 {
+    return self.x*self.x + self.y*self.y + self.z*self.z;
+  }
+
+  pub fn length(&self) -> f64 {
+    return (self.x*self.x + self.y*self.y + self.z*self.z).sqrt();
+  }
+
   pub fn normalize(&self) -> Vec3D {
-    let length = (self.x*self.x + self.y*self.y + self.z*self.z).sqrt();
+    let length = self.length();
     Vec3D {
       x: self.x / length,
       y: self.y / length,

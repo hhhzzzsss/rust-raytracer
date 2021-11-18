@@ -1,19 +1,19 @@
 pub struct HitResult {
-  position: Vec3D,
-	normal: Vec3D,
+  pos: Vec3D,
+	nor: Vec3D,
+  dist: f64,
+  front_face: bool,
+  material: &Material,
 }
 
 impl HitResult {
-  pub fn new(x: f64, y: f64, z:f64) -> Vec3D {
-    let new_vec3d = Vec3D {
-      x,
-      y,
-      z
-    };
-    new_vec3d
-  }
-
-  pub fn normalize(Vec3D vec) -> Vec3D {
-    todo!();
+  pub fn new(pos: Vec3D, nor: Vec3D, dist: f64, front_face: bool, material: &Material) -> Self {
+    Self {
+      dist,
+      nor,
+      dist,
+      front_face,
+      material
+    }
   }
 }

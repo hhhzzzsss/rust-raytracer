@@ -3,12 +3,9 @@ pub mod color;
 pub mod vec3d;
 pub mod mat3d;
 
-fn main() {
-    use crate::color::color::Color;
-    println!("Hello, world!");
+use crate::color::color::Color;
 
-    file_io::file_io::test();
-
+fn test_image() {
     let mut color_vec : Vec<Vec<Color>> = Vec::new(); 
 
     for _i in 0..800 {
@@ -20,4 +17,11 @@ fn main() {
     }
 
     file_io::file_io::vec_to_jpeg(color_vec);
+}
+
+fn test_linalg() {
+    
+}
+
+fn main() {
 }

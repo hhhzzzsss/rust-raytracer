@@ -1,19 +1,27 @@
 use crate::vec3d::Vec3D;
 
-pub fn clamp(x: f64, a: f64, b: f64) -> f64 {
-    if x < a {
-        return a;
-    }
-    if x > b {
-        return b;
-    }
-    return x;
+pub trait Clamp {
+  fn clamp(self, a: f64, b: f64) -> Self;
 }
 
-pub fn clamp(v: Vec3D, a: f64; b: f64) -> Vec3D {
+impl Clamp for f64 {
+  fn clamp(self, a: f64, b: f64) -> Self {
+    if self < a {
+      return a;
+    }
+    if self > b {
+      return b;
+    }
+    return self;
+  }
+}
+
+impl Clamp for Vec3D {
+  fn clamp(self, a: f64, b: f64) -> Self {
     Vec3D::new(
-        clamp(v.x, a, b),
-        clamp(v.y, a, b),
-        clamp(v.z, a, b)
-    );
+      self.x.clamp(a, b),
+      self.y.clamp(a, b),
+      self.z.clamp(a, b)
+    )
+  }
 }

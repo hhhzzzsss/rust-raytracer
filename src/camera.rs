@@ -1,11 +1,13 @@
+use crate::vec3d::Vec3D;
+
 pub struct Camera {
-  origin: Vec3D,
-  pitch: f64,
-  yaw: f64,
-  roll: f64,
-  fov: f64,
-  width: u32,
-  height: u32
+  pub origin: Vec3D,
+  pub pitch: f64,
+  pub yaw: f64,
+  pub roll: f64,
+  pub fov: f64,
+  pub width: u32,
+  pub height: u32
 }
 
 impl Camera {
@@ -15,7 +17,7 @@ impl Camera {
       pitch: pitch,
       yaw: yaw,
       roll: roll,
-      fov: 1,
+      fov: 1.,
       width: 800,
       height: 600
     }

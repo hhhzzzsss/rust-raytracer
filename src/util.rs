@@ -1,3 +1,5 @@
+use std::ops::Add;
+use std::ops::Mul;
 use crate::vec3d::Vec3D;
 
 pub trait Clamp {
@@ -24,4 +26,8 @@ impl Clamp for Vec3D {
       self.z.clamp(a, b)
     )
   }
+}
+
+pub fn mix<T: Mul<f64, Output=T> + Add<Output=T>>(x: T, y: T, a: f64) -> T {
+  return x * (1.-a) + y * a;
 }

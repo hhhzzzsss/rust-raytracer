@@ -3,18 +3,18 @@ use crate::obj::Object;
 use crate::hit_result::HitResult;
 
 pub struct Scene<'a> {
-  pub objects: Vec<&'a dyn Object<'a>>
+  pub objects: Vec<Box<dyn Object<'a> + 'a>>
 }
 
 impl<'a> Scene<'a> {
-  fn new() -> Self {
+  pub fn new() -> Self {
     Self {
       objects: Vec::new()
     }
   }
 
-  fn add(&mut self, object: &'a dyn Object<'a>) {
-    self.objects.push(object);
+  pub fn add<T: Object<'a> + 'a>(&mut self, object: T) {
+    self.objects.push(Box::new(object));
   }
 }
 

@@ -10,9 +10,15 @@ pub mod scene;
 pub mod vec3d;
 pub mod util;
 
-use crate::color::color::Color;
 use crate::vec3d::Vec3D;
 use crate::mat3d::Mat3D;
+use crate::camera::Camera;
+use crate::material::Material;
+use crate::material::BlackHole;
+use crate::scene::Scene;
+use crate::obj::Object;
+use crate::obj::Sphere;
+use crate::raytracing::render;
 
 use std::f64::consts::PI;
 
@@ -48,6 +54,19 @@ fn test_linalg() {
     println!("Mat3D::pitch(PI/2.) * Mat3D::pitch(PI/2.): {}", (Mat3D::pitch(PI/2.)*Mat3D::pitch(PI/2.)).to_string());
 }
 
+fn test_render() {
+    let mat1 = BlackHole{};
+    let mut scene = Scene::new();
+    scene.add(Sphere::new(Vec3D::new(0.,0.,0.), 0.5, &mat1));
+    let camera = Camera::new(Vec3D::new(0., 0., -2.), 0., 0., 0.);
+    match scene.intersect(Vec3D::new(0., 0., -2.), Vec3D::new(0., 0., 1.)) {
+        None => println!("No intersection"),
+        Some(_) => println!("Intersected")
+    }
+    let image = render(&camera, &scene);
+    file_io::file_io::vec_to_jpeg(image);
+}
+
 fn main() {
-    test_linalg();
+    test_render();
 }

@@ -6,8 +6,8 @@ pub struct Camera {
   pub yaw: f64,
   pub roll: f64,
   pub fov: f64,
-  pub width: u32,
-  pub height: u32
+  pub width: usize,
+  pub height: usize
 }
 
 impl Camera {

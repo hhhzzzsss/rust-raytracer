@@ -8,7 +8,7 @@ pub trait Material {
 #[derive(Copy, Clone)]
 pub struct BlackHole;
 impl Material for BlackHole {
-    fn bounce(&self, dir: Vec3D, hit_result: &HitResult, attenuation: &mut Vec3D, color: &mut Vec3D) -> Option<Vec3D> {
+    fn bounce(&self, _dir: Vec3D, _hit_result: &HitResult, _attenuation: &mut Vec3D, _color: &mut Vec3D) -> Option<Vec3D> {
         return None;
     }
 }

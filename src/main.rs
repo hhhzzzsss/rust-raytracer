@@ -7,6 +7,7 @@ pub mod material;
 pub mod obj;
 pub mod raytracing;
 pub mod scene;
+pub mod sky;
 pub mod vec3d;
 pub mod util;
 
@@ -19,6 +20,7 @@ use crate::scene::Scene;
 use crate::obj::Object;
 use crate::obj::Sphere;
 use crate::raytracing::render;
+use crate::sky::DomeGradientSky;
 
 use std::f64::consts::PI;
 
@@ -56,8 +58,10 @@ fn test_linalg() {
 
 fn test_render() {
     let mat1 = BlackHole{};
+    let sky = DomeGradientSky::new(Vec3D::new(0.7, 0.85, 1.0), Vec3D::new(1.3, 1.15, 1.0));
     let mut scene = Scene::new();
-    scene.add(Sphere::new(Vec3D::new(0.,0.,0.), 0.5, &mat1));
+    scene.set_sky(sky);
+    scene.add_object(Sphere::new(Vec3D::new(0.,0.,0.), 0.5, &mat1));
     let camera = Camera::new(Vec3D::new(0., 0., -2.), 0., 0., 0.);
     match scene.intersect(Vec3D::new(0., 0., -2.), Vec3D::new(0., 0., 1.)) {
         None => println!("No intersection"),

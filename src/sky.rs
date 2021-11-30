@@ -5,6 +5,7 @@ pub trait Sky {
     fn get_color(&self, dir: Vec3D) -> Vec3D;
 }
 
+#[derive(Copy, Clone)]
 pub struct SolidSky {
     color: Vec3D
 }
@@ -21,6 +22,7 @@ impl Sky for SolidSky {
     }
 }
 
+#[derive(Copy, Clone)]
 pub struct DomeGradientSky {
     horizon_color: Vec3D,
     zenith_color: Vec3D
@@ -36,6 +38,6 @@ impl DomeGradientSky {
 impl Sky for DomeGradientSky {
     fn get_color(&self, dir: Vec3D) -> Vec3D {
         let a = Vec3D::dot(dir, Self::ZENITH_VEC).max(0.);
-        return mix(self.zenith_color, self.horizon_color, a);
+        return mix(self.horizon_color, self.zenith_color, a);
     }
 }

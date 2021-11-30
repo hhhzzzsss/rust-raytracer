@@ -40,7 +40,7 @@ impl<'a> Object<'a> for Sphere<'a> {
     }
 
     let pos = origin + root*dir;
-    let nor = (origin - self.center) / self.radius;
+    let nor = (pos - self.center) / self.radius;
     let dist = root;
     let material = self.material;
     Some(HitResult {

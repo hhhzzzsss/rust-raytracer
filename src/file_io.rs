@@ -10,9 +10,9 @@ pub mod file_io {
     fn Vec3D_to_Rgb(v: Vec3D) -> Rgb<u8> {
         let rescaled = (v*256.).clamp(0., 255.);
         Rgb([
-            v.x as u8,
-            v.y as u8,
-            v.z as u8
+            rescaled.x as u8,
+            rescaled.y as u8,
+            rescaled.z as u8
         ])
     }
 

@@ -35,7 +35,7 @@ fn test_image() {
         color_vec.push(inner_vec);
     }
 
-    file_io::file_io::vec_to_jpeg(color_vec);
+    file_io::file_io::vec_to_image(color_vec, "image.png");
 }
 
 fn test_linalg() {
@@ -68,7 +68,7 @@ fn test_render() {
         Some(_) => println!("Intersected")
     }
     let image = render(&camera, &scene);
-    file_io::file_io::vec_to_jpeg(image);
+    file_io::file_io::vec_to_image(image, "render.png");
 }
 
 fn main() {

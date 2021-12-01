@@ -1,4 +1,5 @@
 pub mod file_io {
+    use std::path::Path;
     use image::{ImageBuffer, Rgb};
     use crate::vec3d::Vec3D;
     use crate::util::Clamp;
@@ -18,7 +19,7 @@ pub mod file_io {
 
     //Assumes that position in inner vector determines x-axis position
     //and position in outer vector determines y-axis position
-    pub fn vec_to_jpeg(colors: Vec<Vec<Vec3D>>) {
+    pub fn vec_to_image<T: AsRef<Path>>(colors: Vec<Vec<Vec3D>>, path: T) {
         let imgx: u32 = colors.get(0).unwrap().len() as u32;
         let imgy: u32 = colors.len() as u32;
 
@@ -30,6 +31,6 @@ pub mod file_io {
                 img.put_pixel(x, y, Vec3D_to_Rgb(color));
             }
         }
-        img.save("image.jpg").unwrap();
+        img.save(path).unwrap();
     }
 }

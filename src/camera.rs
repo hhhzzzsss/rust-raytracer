@@ -7,7 +7,8 @@ pub struct Camera {
   pub roll: f64,
   pub fov: f64,
   pub width: usize,
-  pub height: usize
+  pub height: usize,
+  pub samples: u32
 }
 
 impl Camera {
@@ -19,7 +20,8 @@ impl Camera {
       roll: roll,
       fov: 1.,
       width: 800,
-      height: 600
+      height: 600,
+      samples: 64
     }
   }
 }

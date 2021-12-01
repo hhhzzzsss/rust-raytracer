@@ -51,3 +51,40 @@ impl<'a> Object<'a> for Sphere<'a> {
     })
   }
 }
+
+pub struct HorizontalPlane<'a> {
+  y: f64,
+  material: &'a dyn Material
+}
+
+impl<'a> HorizontalPlane<'a> {
+  pub const NORMAL: Vec3D = Vec3D{x:0., y:1., z:0.};
+  pub fn new(y: f64, material: &'a dyn Material) -> Self {
+    Self {
+      y,
+      material
+    }
+  }
+}
+
+impl<'a> Object<'a> for HorizontalPlane<'a> {
+  fn intersect(&self, origin: Vec3D, dir: Vec3D) -> Option<HitResult<'a>> {
+    if dir.y == 0. { return None; }
+
+    let dy = origin.y - self.y;
+    let dist = - dy / (Vec3D::dot(dir, Self::NORMAL));
+
+    if dist < 0. { return None; }
+
+    let pos = origin + dist*dir;
+    let nor = Self::NORMAL;
+    let material = self.material;
+
+    Some(HitResult {
+      pos,
+      nor,
+      dist,
+      material
+    })
+  }
+}

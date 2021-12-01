@@ -2,6 +2,7 @@ use std::ops::Add;
 use std::ops::Sub;
 use std::ops::Mul;
 use std::ops::Div;
+use std::ops::Neg;
 
 #[derive(Copy, Clone)]
 pub struct Vec3D {
@@ -30,6 +31,10 @@ impl Vec3D {
 
   pub fn length(&self) -> f64 {
     return (self.x*self.x + self.y*self.y + self.z*self.z).sqrt();
+  }
+
+  pub fn near_zero(&self) -> bool {
+    return self.x.abs() < 0.0001 && self.y.abs() < 0.0001 && self.z.abs() < 0.0001;
   }
 
   pub fn normalize(&self) -> Vec3D {
@@ -90,6 +95,18 @@ impl Div<Vec3D> for Vec3D {
       x: self.x / rhs.x,
       y: self.y / rhs.y,
       z: self.z / rhs.z
+    }
+  }
+}
+
+impl Neg for Vec3D {
+  type Output = Vec3D;
+
+  fn neg(self) -> Vec3D {
+    Vec3D {
+      x: -self.x,
+      y: -self.y,
+      z: -self.z
     }
   }
 }

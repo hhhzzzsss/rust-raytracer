@@ -16,9 +16,11 @@ use crate::mat3d::Mat3D;
 use crate::camera::Camera;
 use crate::material::Material;
 use crate::material::BlackHole;
+use crate::material::Dielectric;
 use crate::scene::Scene;
 use crate::obj::Object;
 use crate::obj::Sphere;
+use crate::obj::HorizontalPlane;
 use crate::raytracing::render;
 use crate::sky::DomeGradientSky;
 
@@ -58,10 +60,12 @@ fn test_linalg() {
 
 fn test_render() {
     let mat1 = BlackHole{};
+    let mat2 = Dielectric::new(Vec3D::new(1., 1., 1.), 2.);
     let sky = DomeGradientSky::new(Vec3D::new(0.7, 0.85, 1.0), Vec3D::new(1.3, 1.15, 1.0));
     let mut scene = Scene::new();
     scene.set_sky(sky);
-    scene.add_object(Sphere::new(Vec3D::new(0.,0.,0.), 0.5, &mat1));
+    scene.add_object(Sphere::new(Vec3D::new(0.,0.,0.), 0.5, &mat2));
+    scene.add_object(HorizontalPlane::new(-0.5, &mat2));
     let camera = Camera::new(Vec3D::new(0., 0., -2.), 0., 0., 0.);
     match scene.intersect(Vec3D::new(0., 0., -2.), Vec3D::new(0., 0., 1.)) {
         None => println!("No intersection"),

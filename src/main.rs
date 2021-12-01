@@ -59,13 +59,13 @@ fn test_linalg() {
 }
 
 fn test_render() {
-    let mat1 = BlackHole{};
-    let mat2 = Dielectric::new(Vec3D::new(1., 1., 1.), 2.);
+    let mat1 = Dielectric::new(Vec3D::new(0.9, 0.9, 0.9), 2.);
+    let mat2 = Dielectric::new(Vec3D::new(1., 1., 0.5), 2.);
     let sky = DomeGradientSky::new(Vec3D::new(0.7, 0.85, 1.0), Vec3D::new(1.3, 1.15, 1.0));
     let mut scene = Scene::new();
     scene.set_sky(sky);
+    scene.add_object(HorizontalPlane::new(-0.5, &mat1));
     scene.add_object(Sphere::new(Vec3D::new(0.,0.,0.), 0.5, &mat2));
-    scene.add_object(HorizontalPlane::new(-0.5, &mat2));
     let camera = Camera::new(Vec3D::new(0., 0., -2.), 0., 0., 0.);
     match scene.intersect(Vec3D::new(0., 0., -2.), Vec3D::new(0., 0., 1.)) {
         None => println!("No intersection"),

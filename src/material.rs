@@ -29,7 +29,7 @@ impl Dielectric {
 }
 
 impl Material for Dielectric {
-    fn bounce(&self, dir: Vec3D, hit_result: &HitResult, attenulation: &mut Vec3D, color: &mut Vec3D, rng: &Rng) -> Option<Vec3D> {
+    fn bounce(&self, dir: Vec3D, hit_result: &HitResult, attenuation: &mut Vec3D, color: &mut Vec3D, rng: &Rng) -> Option<Vec3D> {
         let reflectivity = util::fresnel(dir, hit_result.nor, self.ior);
         if rng.f64() < reflectivity {
             return Some(util::reflect(dir, hit_result.nor));
@@ -39,6 +39,7 @@ impl Material for Dielectric {
             let mut new_dir = nor + util::rand_unit_vector(rng);
             if new_dir.near_zero() { new_dir = nor; }
             new_dir = new_dir.normalize();
+            *attenuation = (*attenuation) * self.color;
             return Some(new_dir);
         }
     }

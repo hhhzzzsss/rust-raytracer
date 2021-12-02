@@ -36,7 +36,7 @@ impl DomeGradientSky {
     }
 
     pub fn from_average(horizon_color: Vec3D, average_color: Vec3D) -> Self {
-        let zenith_color = (-2.*PI*horizon_color + average_color) / ((PI-2.)*PI);
+        let zenith_color = (PI*average_color - 2.*horizon_color) / (PI-2.);
         return Self { horizon_color, zenith_color };
     }
 }

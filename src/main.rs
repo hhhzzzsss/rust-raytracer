@@ -60,7 +60,7 @@ fn test_linalg() {
 
 fn test_render() {
     let mat1 = Dielectric::new(Vec3D::new(0.1, 0.8, 0.6), 2.);
-    let mat2 = Dielectric::new(Vec3D::new(1., 1., 0.5), 2.);
+    let mat2 = Dielectric::new(Vec3D::new(0.8, 0.8, 0.4), 2.);
     let sky = DomeGradientSky::from_average(Vec3D::new(0.6, 0.8, 1.0), Vec3D::new(1.0, 1.0, 1.0));
     let mut scene = Scene::new();
     scene.set_sky(sky);

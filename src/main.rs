@@ -59,9 +59,9 @@ fn test_linalg() {
 }
 
 fn test_render() {
-    let mat1 = Dielectric::new(Vec3D::new(0.9, 0.9, 0.9), 2.);
+    let mat1 = Dielectric::new(Vec3D::new(0.1, 0.8, 0.6), 2.);
     let mat2 = Dielectric::new(Vec3D::new(1., 1., 0.5), 2.);
-    let sky = DomeGradientSky::new(Vec3D::new(0.7, 0.85, 1.0), Vec3D::new(1.3, 1.15, 1.0));
+    let sky = DomeGradientSky::from_average(Vec3D::new(0.6, 0.8, 1.0), Vec3D::new(1.0, 1.0, 1.0));
     let mut scene = Scene::new();
     scene.set_sky(sky);
     scene.add_object(HorizontalPlane::new(-0.5, &mat1));

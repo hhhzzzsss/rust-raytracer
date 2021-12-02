@@ -21,7 +21,7 @@ impl Camera {
       fov: 1.,
       width: 800,
       height: 600,
-      samples: 64
+      samples: 256
     }
   }
 }

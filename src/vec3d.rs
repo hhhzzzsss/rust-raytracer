@@ -46,6 +46,14 @@ impl Vec3D {
     }
   }
 
+  pub fn powf(&self, exponent: f64) -> Vec3D {
+    Vec3D {
+      x: self.x.powf(exponent),
+      y: self.y.powf(exponent),
+      z: self.z.powf(exponent)
+    }
+  }
+
   pub fn to_string(&self) -> String {
     return format!("Vec3D {{ {:.3}, {:.3}, {:.3} }}", self.x, self.y, self.z);
   }

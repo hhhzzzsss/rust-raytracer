@@ -70,6 +70,7 @@ pub fn render(camera: &Camera, scene: &Scene)  -> Vec<Vec<Vec3D>> {
         color = color + trace(camera.origin, dir, &scene, 8, &rng);
       }
       color = color / (camera.samples as f64);
+      color = color.powf(0.45); // gamma correction
       image[y as usize].push(color);
     }
   }

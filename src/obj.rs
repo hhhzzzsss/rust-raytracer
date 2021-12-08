@@ -88,3 +88,39 @@ impl<'a> Object<'a> for HorizontalPlane<'a> {
     })
   }
 }
+
+pub struct Triangle<'a> {
+  v1: Vec3D,
+  v2: Vec3D,
+  v3: Vec3D,
+  material: &'a dyn Material
+}
+
+impl<'a> Triangle<'a> {
+  pub fn new(v1: Vec3D, v2: Vec3D, v3: Vec3D, material: &'a dyn Material) -> Self {
+    Self {
+      v1, v2, v3,
+      material
+    }
+  }
+}
+
+impl<'a> Object<'a> for Triangle<'a> {
+  fn intersect(&self, origin: Vec3D, dir: Vec3D) -> Option<HitResult<'a>> {
+    let normal = Vec3D::cross(self.v2 - self.v1, self.v3 - self.v1).normalize();
+    let dir_norm = dir.normalize();
+    if Vec3D::dot(normal, dir_norm).abs() < 0.0001f64 {
+      return None; // parallel
+    }
+
+    let d = -Vec3D::dot(normal, self.v1);
+    let dist = -(d + Vec3D::dot(normal, origin)) / Vec3D::dot(normal, dir_norm);
+    let pos = origin + dir_norm * dist;
+    Some(HitResult {
+      pos,
+      nor: normal,
+      dist,
+      material: self.material
+    })
+  }
+}

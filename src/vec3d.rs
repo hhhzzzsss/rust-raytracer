@@ -25,6 +25,13 @@ impl Vec3D {
     return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
   }
 
+  pub fn cross(v1: Vec3D, v2: Vec3D) -> Vec3D {
+    let x = v1.y * v2.z - v1.z * v2.y;
+    let y = -(v1.x * v2.z - v1.z * v2.x);
+    let z = v1.x * v2.y - v2.x * v1.y;
+    Vec3D::new(x, y, z)
+  }
+
   pub fn length_squared(&self) -> f64 {
     return self.x*self.x + self.y*self.y + self.z*self.z;
   }
@@ -35,15 +42,6 @@ impl Vec3D {
 
   pub fn near_zero(&self) -> bool {
     return self.x.abs() < 0.0001 && self.y.abs() < 0.0001 && self.z.abs() < 0.0001;
-  }
-
-  pub fn normalize(&self) -> Vec3D {
-    let length = self.length();
-    Vec3D {
-      x: self.x / length,
-      y: self.y / length,
-      z: self.z / length
-    }
   }
 
   pub fn powf(&self, exponent: f64) -> Vec3D {

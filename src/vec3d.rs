@@ -44,6 +44,15 @@ impl Vec3D {
     return self.x.abs() < 0.0001 && self.y.abs() < 0.0001 && self.z.abs() < 0.0001;
   }
 
+  pub fn normalize(&self) -> Vec3D {
+    let length = self.length();
+    Vec3D {
+      x: self.x / length,
+      y: self.y / length,
+      z: self.z / length
+    }
+  }
+
   pub fn powf(&self, exponent: f64) -> Vec3D {
     Vec3D {
       x: self.x.powf(exponent),

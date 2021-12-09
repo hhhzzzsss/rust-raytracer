@@ -11,6 +11,7 @@ pub mod sky;
 pub mod vec3d;
 pub mod util;
 
+use std::thread;
 use crate::vec3d::Vec3D;
 use crate::mat3d::Mat3D;
 use crate::camera::Camera;
@@ -71,7 +72,7 @@ fn test_render() {
         None => println!("No intersection"),
         Some(_) => println!("Intersected")
     }
-    let image = render(&camera, &scene);
+    let image = render(&camera, &scene, 20, 4);
     file_io::file_io::vec_to_image(image, "render.png");
 }
 

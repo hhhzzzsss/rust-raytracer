@@ -2,7 +2,7 @@ use crate::vec3d::Vec3D;
 use crate::material::Material;
 use crate::hit_result::HitResult;
 
-pub trait Object<'a> {
+pub trait Object<'a> : Sync {
   fn intersect(&self, origin: Vec3D, dir: Vec3D) -> Option<HitResult<'a>>;
 }
 

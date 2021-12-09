@@ -10,7 +10,7 @@ pub struct Scene<'a> {
 }
 
 impl<'a> Scene<'a> {
-  pub fn new() -> Self {
+  pub const fn new() -> Self {
     Self {
       objects: Vec::new(),
       sky: Box::new(SolidSky::new(Vec3D::new(0., 0., 0.)))

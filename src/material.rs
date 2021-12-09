@@ -3,7 +3,7 @@ use crate::hit_result::HitResult;
 use crate::util;
 use fastrand::Rng;
 
-pub trait Material {
+pub trait Material : Sync {
     fn bounce(&self, dir: Vec3D, hit_result: &HitResult, attenuation: &mut Vec3D, color: &mut Vec3D, rng: &Rng) -> Option<Vec3D>;
 }
 

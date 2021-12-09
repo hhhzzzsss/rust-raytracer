@@ -2,7 +2,7 @@ use crate::vec3d::Vec3D;
 use crate::util::mix;
 use std::f64::consts::PI;
 
-pub trait Sky {
+pub trait Sky : Sync {
     fn get_color(&self, dir: Vec3D) -> Vec3D;
 }
 

@@ -4,6 +4,12 @@ use crate::scene::Scene;
 use crate::camera::Camera;
 use crate::obj::Object;
 use fastrand::Rng;
+use std::thread;
+use std::sync::mpsc::channel;
+use std::sync::mpsc::Sender;
+use std::sync::mpsc::Receiver;
+use std::time;
+
 
 pub const MIN_DIST: f64 = 0.0002;
 pub const MAX_DIST: f64 = 1000000.0;
@@ -46,15 +52,39 @@ pub fn trace(origin: Vec3D, initial_dir: Vec3D, scene: &Scene, max_bounces: u32,
   return color;
 }
 
-pub fn render(camera: &Camera, scene: &Scene)  -> Vec<Vec<Vec3D>> {
-  // todo: parallelism
+pub fn render(camera: &'static Camera, scene: &'static Scene, chunks: u32, threads: u32) -> Vec<Vec<Vec3D>> {
+  let tvec: Vec<Sender<u32>> = Vec::new();
+  let rvec: Vec<Receiver<Vec<Vec<Vec3D>>>> = Vec::new();
+  let mut result: Vec<Vec<Vec3D>> = Vec::new();
+  result.resize(camera.height, Vec::new());
+
+  
+  let check_delay = time::Duration::from_millis(10);
+  for i in 0..threads {
+    let (controller_t, agent_r) = channel();
+    let (agent_t, controller_r) = channel();
+    thread::spawn(move|| {
+      loop {
+        let chunk_idx: u32 = agent_r.recv().unwrap();
+        if chunk_idx < 0 { break; }
+        agent_t.send(render_chunk(camera, scene, chunk_idx, chunks));
+      }
+    });
+  }
+
+  return result;
+}
+
+pub fn render_chunk(camera: &Camera, scene: &Scene, chunk_idx: u32, num_divisions: u32) -> Vec<Vec<Vec3D>> {
   let rng = Rng::new();
   let rotation_matrix = Mat3D::rotation(camera.pitch, camera.yaw, camera.roll);
-  let mut image: Vec<Vec<Vec3D>> = Vec::new();
+  let mut chunk: Vec<Vec<Vec3D>> = Vec::new();
   let field_ratio: f64 = camera.fov.tan() / 2.;
   let pixel_size = 2. * field_ratio / (camera.height as f64);
-  for y in 0..camera.height {
-    image.push(Vec::new());
+  let bottom_bound = (camera.height as u32) * chunk_idx / num_divisions;
+  let upper_bound = (camera.height as u32) * (chunk_idx+1) / num_divisions;
+  for y in bottom_bound..upper_bound {
+    chunk.push(Vec::new());
     for x in 0..camera.width {
       let mut u: f64 = ((x as f64)*2. - (camera.width as f64)) as f64;
       let mut v: f64 = ((camera.height as f64) - (y as f64)*2.) as f64;
@@ -71,8 +101,8 @@ pub fn render(camera: &Camera, scene: &Scene)  -> Vec<Vec<Vec3D>> {
       }
       color = color / (camera.samples as f64);
       color = color.powf(0.45); // gamma correction
-      image[y as usize].push(color);
+      chunk[y as usize].push(color);
     }
   }
-  image
+  chunk
 }

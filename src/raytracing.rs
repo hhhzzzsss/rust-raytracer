@@ -62,11 +62,11 @@ pub fn render(camera: &Camera, scene: &Scene)  -> Vec<Vec<Vec3D>> {
       v /= camera.height as f64;
       u *= field_ratio;
       v *= field_ratio;
-      u += rng.f64() * pixel_size;
-      v += rng.f64() * pixel_size;
-      let dir = (rotation_matrix * Vec3D::new(u, v, 1.)).normalize();
       let mut color = Vec3D::new(0., 0., 0.);
       for _i in 0..camera.samples {
+        let tu = u + rng.f64() * pixel_size;
+        let tv = v + rng.f64() * pixel_size;
+        let dir = (rotation_matrix * Vec3D::new(tu, tv, 1.)).normalize();
         color = color + trace(camera.origin, dir, &scene, 8, &rng);
       }
       color = color / (camera.samples as f64);
